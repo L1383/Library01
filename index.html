@@ -2,46 +2,33 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
+  <title>مدیریت رمان‌ها + Firebase</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ورود / ثبت‌نام</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { font-family: sans-serif; direction: rtl; padding: 20px; background: #f9f9f9; max-width: 700px; margin: auto; }
+    input, button { padding: 0.6rem; margin: 0.3rem 0; width: 100%; border-radius: 5px; }
+    button { background-color: #007bff; color: white; border: none; cursor: pointer; }
+    #novels { margin-top: 20px; }
+    .novel-item { background: #fff; padding: 10px; border-radius: 6px; margin-bottom: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.05); }
+  </style>
+  <script type="module" src="./firebase-app.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h2>📚 ورود / ثبت‌نام</h2>
-    <input type="email" id="email" placeholder="ایمیل" />
-    <input type="password" id="password" placeholder="رمز عبور" />
-    <button onclick="login()">ورود</button>
-    <button onclick="signup()">ثبت‌نام</button>
+  <h2>📚 ورود / ثبت‌نام</h2>
+  <input type="email" id="email" placeholder="ایمیل" />
+  <input type="password" id="password" placeholder="رمز عبور" />
+  <button id="signup">ثبت‌نام</button>
+  <button id="login">ورود</button>
+  <button id="logout">خروج</button>
+
+  <div id="app" style="display:none;">
+    <h3>➕ افزودن رمان</h3>
+    <input id="novelName" placeholder="نام رمان" />
+    <input id="novelCategory" placeholder="دسته‌بندی" />
+    <button id="addNovel">افزودن رمان</button>
+
+    <h3>📖 لیست رمان‌ها</h3>
+    <div id="novels"></div>
   </div>
-
-  <script type="module">
-    import { auth } from './firebase.js';
-    import {
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword
-    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-
-    const emailEl = document.getElementById("email");
-    const passwordEl = document.getElementById("password");
-
-    window.login = async () => {
-      try {
-        await signInWithEmailAndPassword(auth, emailEl.value, passwordEl.value);
-        location.href = "dashboard.html";
-      } catch (err) {
-        alert("❌ ورود ناموفق: " + err.message);
-      }
-    };
-
-    window.signup = async () => {
-      try {
-        await createUserWithEmailAndPassword(auth, emailEl.value, passwordEl.value);
-        location.href = "dashboard.html";
-      } catch (err) {
-        alert("❌ ثبت‌نام ناموفق: " + err.message);
-      }
-    };
-  </script>
 </body>
 </html>
