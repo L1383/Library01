@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورود / ثبت‌نام</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>📚 ورود / ثبت‌نام</h2>
+    <input type="email" id="email" placeholder="ایمیل" />
+    <input type="password" id="password" placeholder="رمز عبور" />
+    <button onclick="login()">ورود</button>
+    <button onclick="signup()">ثبت‌نام</button>
+  </div>
+
+  <script type="module">
+    import { auth } from './firebase.js';
+    import {
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+    const emailEl = document.getElementById("email");
+    const passwordEl = document.getElementById("password");
+
+    window.login = async () => {
+      try {
+        await signInWithEmailAndPassword(auth, emailEl.value, passwordEl.value);
+        location.href = "dashboard.html";
+      } catch (err) {
+        alert("❌ ورود ناموفق: " + err.message);
+      }
+    };
+
+    window.signup = async () => {
+      try {
+        await createUserWithEmailAndPassword(auth, emailEl.value, passwordEl.value);
+        location.href = "dashboard.html";
+      } catch (err) {
+        alert("❌ ثبت‌نام ناموفق: " + err.message);
+      }
+    };
+  </script>
+</body>
+</html>
